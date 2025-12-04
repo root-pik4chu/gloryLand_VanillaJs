@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Pinned Paragraph Assemble with Line Breaks</title>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+   <style>
+      body {
+         margin: 0;
+         background: #000;
+         font-family: Arial, sans-serif;
+         overflow-x: hidden;
+      }
+
+      .main {
+         width: 100%;
+         height: 100%;
+         position: relative;
+
+      }
+
+      .page1 {
+         width: 100%;
+         height: 100vh;
+         position: relative;
+      }
+
+      .page2 {
+   width: 100%;
+   height: 200vh;     /* gives scroll space */
+   background-color: rgb(38, 38, 38);
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center; /* centers content vertically */
+}
+
+
+      #wrapper {
+   width: 60vw;
+   height: auto;
+   position: relative;
+}
+
+      #container {
+         position: fixed;
+         /* letters stay on screen */
+         inset: 0;
+         pointer-events: none;
+      }
+
+      .char {
+         position: absolute;
+         color: white;
+         font-size: 15px;
+         font-weight: 500;
+         will-change: transform;
+      }
+
+      #template {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         width: 60vw;
+         transform: translate(-50%, -50%);
+         color: transparent;
+         font-size: 15px;
+         pointer-events: none;
+         line-height: 1.4;
+         white-space: pre-wrap;
+         background-color: pink;
+         /* important for line breaks */
+      }
+
+      #template span {
+         position: relative;
+      }
+   </style>
+</head>
+
+<body>
+
+   <div class="main">
+      <div class="mian_wrapper">
+         <div class="page1">
+
+         </div>
+         <div class="page2">
+
+            <div id="wrapper">
+               <div id="container"></div>
+               <div id="template"></div>
+            </div>
+         </div>
+         <div class="page1">
+
+         </div>
+      </div>
+   </div>
+
+
+
+   <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      const text = `
+I am a frontend developer who loves motion, visual storytelling,
+and building interactions that feel alive. I believe animation should
+support the message — not distract from it. This small demo shows how
+letters begin as chaos but assemble into meaning as you scroll.
+`;
+
+      // replace \n with actual line breaks
+      const textWithBreaks = text.replace(/\n/g, "\n");
+
+      const template = document.getElementById("template");
+      const container = document.getElementById("container");
+
+      // wrap each character (including spaces) in a span
+      template.innerHTML = textWithBreaks
+         .split("")
+         .map(c => {
+            if (c === "\n") return "<br>";
+            if (c === " ") return "&nbsp;";
+            return `<span>${c}</span>`;
+         })
+         .join("");
+
+      const spans = Array.from(template.querySelectorAll("span"));
+
+      // record target positions
+      requestAnimationFrame(() => {
+         const charData = spans.map(span => {
+            const rect = span.getBoundingClientRect();
+            return { x: rect.left, y: rect.top, char: span.innerText };
+         });
+
+         template.style.display = "none";
+
+         // create floating letters
+         const floatingChars = charData.map(c => {
+            const el = document.createElement("div");
+            el.className = "char";
+            el.innerHTML = c.char;
+            container.appendChild(el);
+            return el;
+         });
+
+         // initial random scatter
+         floatingChars.forEach(el => {
+            gsap.set(el, {
+               x: () => gsap.utils.random(-50, window.innerWidth + 50),
+               y: () => gsap.utils.random(-50, window.innerHeight + 50),
+               rotate: () => gsap.utils.random(-180, 180),
+               opacity: 0.4
+            });
+         });
+
+         // scroll-triggered assembly with pin
+         gsap.to(floatingChars, {
+            scrollTrigger: {
+               trigger: "#wrapper",
+               start: "top top",
+               end: "50% 50%",
+               scrub: 1,
+               pin: true,
+               markers: true,
+
+            },
+            x: i => charData[i].x,
+            y: i => charData[i].y,
+            rotate: 0,
+            opacity: 1,
+            ease: "power2.out"
+         });
+      });
+   </script>
+
+</body>
+
+</html>

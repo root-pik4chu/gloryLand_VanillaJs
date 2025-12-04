@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Pinned Paragraph Assemble with Line Breaks</title>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+   <div class="page1">
+      <!-- nav Bar -->
+      <div class="NavBar_wrapper">
+         <div class="nav-wrapper">
+            <!-- nav-bg is centered inside wrapper (left:50% + translateX(-50%)) -->
+            <div class="nav-bg" id="navBg">
+               <div class="nav-content">
+                  <h2 id="logo">Logo</h2>
+
+                  <button id="ham" class="ham" aria-label="Toggle menu" aria-expanded="false" type="button">
+                     <span class="line line--top"></span>
+                     <span class="line line--bottom"></span>
+                  </button>
+               </div>
+
+               <div class="inner-content" id="inner">
+                  <!-- content too add in NavBAr -->
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="text_wrapper flex">
+         <div class="text">
+            <h1>
+            Development is the key to Glory Land
+         </h1>
+         </div>
+      </div>
+
+      <div class="rotate_division">
+         <div class="wrapper_rotate" id="circle">
+            <!-- 10 divisions -->
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+            <div class="division"></div>
+         </div>
+      </div>
+
+   </div>
+
+   <div class="page2">
+      <div id="wrapper">
+         <div id="container"></div>
+         <div id="template"></div>
+      </div>
+   </div>
+
+   <div class="page1 flex_top">
+      <div class="image">
+         <div class="page" style="flex-direction:column;">
+
+            <div class="mask-container">
+               <svg class="svg">
+                  <defs>
+                     <filter id="filter">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="10" result="noise" />
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="100" />
+                     </filter>
+
+                     <mask id="circleMask">
+                        <circle cx="300" cy="200" r="0" fill="white" id="mask-circle" filter="url(#filter)" />
+                     </mask>
+                  </defs>
+
+                  <image
+                     href="https://images.unsplash.com/photo-1615012553971-f7251c225e01?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                     mask="url(#circleMask)" preserveAspectRatio="xMidYMid slice" />
+               </svg>
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <div class="page1"></div>
+
+   <script>
+
+   </script>
+   <script type="module" src="script.js"></script>
+
+</body>
+
+</html>
