@@ -292,3 +292,42 @@ h2#logo {
     width: 20px;
   }
 }
+
+
+.button_Wrapper{
+  width: 100%;
+  height: 100vh;
+  
+}
+.button_container{
+    width:10vw;
+    height:5vw;
+    background:rgb(205, 205, 205);
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+    
+  }
+
+  .button{
+    width:100%;
+    height:100%;
+    font-size:2vw;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
+    top:0;
+    left:0;
+    color:#101010;
+    transform-origin: 50% -40px;
+  }
+
+  .front{
+    transform: translateX(0) rotate(0deg);
+  }
+
+  .back{
+    transform: translateX(-100%) rotate(-12deg);
+    opacity:0;
+  }

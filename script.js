@@ -1,6 +1,6 @@
 import { initMaskScrollAnimation } from "./maskScroll.js";
 import { initNavMenu } from "./initNavMenu.js";
-
+import { initButtonArcAnimation } from "./buttonArc.js"
 
 
 
@@ -120,6 +120,9 @@ initNavMenu({
   ham: "#ham",
   logo: "#logo"
 });
+
+  initButtonArcAnimation(".button_container");
+
 
 const ham = document.getElementById('ham');
 ham.addEventListener('click', () => {
